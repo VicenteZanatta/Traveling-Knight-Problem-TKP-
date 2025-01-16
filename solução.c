@@ -7,8 +7,14 @@
 const int MAXIMO = 7;
 const int MINIMO = 0;
 
+int movimentos[8][2] = {
+    {2, 1}, {2, -1}, {-2, 1}, {-2, -1},
+    {1, 2}, {1, -2}, {-1, 2}, {-1, -2}
+};
+
 int validaPosicao(int x, int y);
 int calculaDistancia(int x, int y, int dx, int dy);
+int dijkstra(int cx, int cy, int dx, int dy, int numMovimentos, int posicoesVisitadas[][7]);
  
 int main() {
  
@@ -21,6 +27,8 @@ int main() {
     int yCavalo = 0;
     int xDestino = 0;
     int yDestino = 0;
+
+    int posicoesVisitadas[7][7];
 
     fgets(Posicao_inicial, 3, stdin);
     fgets(Destino, 3, stdin);
@@ -46,4 +54,17 @@ int calculaDistancia(int x, int y, int dx, int dy){
                                                     // calcula o mudola da distancia entre uma 
     return (((x - dx)^2 + (y - dy)^2)^(1/2));       // posicao (x,y) e o destino (dx,dy)
 
-}                                               
+}
+
+int dijkstra(int cx, int cy, int dx, int dy, int numMovimentos, int posicoesVisitadas[][7])
+{
+    if((cx == dx) && (cy == dy))
+        return numMovimentos;
+    else 
+
+    posicoesVisitadas[cx][cy] = -1;
+
+    
+    
+}
+
