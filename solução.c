@@ -7,36 +7,21 @@ const int INFINITO = 10000000;
 const int POS_MAXIMO = 7;
 const int POS_MINIMO = 0;
 
-int MovimentosEm_X[7] = {-1,1,2,2,1,-1,-2,-2};
-int MovimentosEm_Y [7]= {2,2,1,-1,-2,-2,-1,1};
+int MovimentosEm_X[8] = {-1,1,2,2,1,-1,-2,-2};
+int MovimentosEm_Y [8]= {2,2,1,-1,-2,-2,-1,1};
 
-typedef struct no{
-
-    int x;
-    int y;
-    int visitado;
-    int movimentos;
-}No;
-
-int validaPosicao(int x, int y);
-int dijkstra(int cx, int cy, int dx, int dy, int numMovimentos, int posicoesVisitadas[][7]);
-void inicializaMatrizes( int matriz1[7][7], int matriz2[7][7]);
+int validaMovimento(int x, int y);
+int dijkstra(int cx, int cy, int dx, int dy, int posicoesVisitadas[][8]);
+void inicializaMatrizes( int matriz1[8][8], int matriz2[8][8]);
 
 int main() {
  
     char Posicao_inicial[3];
     char Destino[3];
-
-
-
-    No posicaoCavalo;
-    No destino;
     int input_xCavalo = 0;
     int input_yCavalo = 0;
     int input_xDestino = 0;
     int input_yDestino = 0;
-
-    int posicoesVisitadas[7][7];
 
     fgets(Posicao_inicial, 3, stdin);
     fgets(Destino, 3, stdin);
@@ -46,28 +31,33 @@ int main() {
     input_yDestino = Destino[1] - 96;         // com base na tabela ASCII
     input_xDestino = Destino[2] - 47;
 
-    posicaoCavalo.x = input_xCavalo;
-    posicaoCavalo.y = input_yCavalo;
-    posicaoCavalo.movimentos = 0;
-    destino.x = input_xDestino;
-    destino.y = input_yDestino;
-
-
     return 0;
 }
 
-int validaPosicao(int x, int y){
+int validaMovimento(int x, int y){
 
-    return(( x > 0 && x < 7 ) && ( y > 0 && y < 7 ));
+    return(( x >= 0 && x <= 7 ) && ( y >= 0 && y <= 7 ));
 
 }
 
-void relaxamento(int MatrizDePosicao[][7], int X_atual, int Y_atual,int movimentos)
+void relaxamento(int MatrizDePosicao[][8], int X_atual, int Y_atual,int movimentos)
 {
+    int X_movimento = 0;
+    int Y_movimento = 0;
     
+    for(int i = 0; i <= POS_MAXIMO; i++)
+    {
+        X_movimento = X_atual - MovimentosEm_X[i];
+        Y_movimento = Y_atual - MovimentosEm_Y[i];
+
+        if(validaMovimento(X_movimento, Y_movimento) == 1)
+        {
+            MatrizDePosicao[X_movimento][Y_movimento];
+        }
+    }
 }
 
-void inicializaMatrizes( int matriz_Tabuleiro[7][7], int matriz_Visitados[7][7])
+void inicializaMatrizes( int matriz_Tabuleiro[8][8], int matriz_Visitados[8][8])
 {
     int x = 0;
     int y = 0;
@@ -79,10 +69,10 @@ void inicializaMatrizes( int matriz_Tabuleiro[7][7], int matriz_Visitados[7][7])
     }
 }
 
-int dijkstra(int cx, int cy, int dx, int dy, int posicoesVisitadas[][7])
+int dijkstra(int cx, int cy, int dx, int dy, int posicoesVisitadas[][8])
 {    
-    int Tabuleiro[7][7];
-    int Visitados[7][7];
+    int Tabuleiro[8][8];
+    int Visitados[8][8];
     int x = 0;
     int y = 0;
     int PosicaoAtual_X = 0;
